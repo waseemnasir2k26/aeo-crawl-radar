@@ -1,0 +1,224 @@
+# aeo-crawl-radar :: AI crawler taxonomy
+#
+# READ THIS BEFORE TRUSTING THE OUTPUT
+# ------------------------------------
+# 1. User-agent strings are set by the client. They are trivially spoofable.
+#    A line matching "GPTBot" is a *claim*, not proof. Use --verify-dns (reverse
+#    + forward DNS) for the vendors that publish resolvable crawler hostnames,
+#    or check the vendor's published IP ranges.
+# 2. Vendors rename, split and retire crawlers regularly. This file is a
+#    snapshot, not a live feed. Check `docs` for each entry and override the
+#    whole taxonomy with:  aeo-crawl-radar scan access.log --bots my-bots.yaml
+# 3. `purpose` is the vendor's *stated* purpose:
+#      training     - corpus collection for model training
+#      search-index - builds an index that answers/cites later
+#      live-fetch   - fetched in response to a specific user prompt, at runtime
+#    A single vendor often runs one of each; they are listed separately because
+#    blocking or allowing them are different decisions.
+#
+# Schema per entry:
+#   name, vendor, ua_regex (case-insensitive, searched in the UA string),
+#   purpose, docs, verify_dns (optional list of hostname suffixes that a
+#   reverse-DNS lookup of the client IP must end with for the hit to count
+#   as VERIFIED).
+
+version: 1
+updated: "2026-09-01"
+
+bots:
+  - name: GPTBot
+    vendor: OpenAI
+    ua_regex: "GPTBot"
+    purpose: training
+    docs: https://platform.openai.com/docs/bots
+    verify_dns: [".openai.com"]
+
+  - name: OAI-SearchBot
+    vendor: OpenAI
+    ua_regex: "OAI-SearchBot"
+    purpose: search-index
+    docs: https://platform.openai.com/docs/bots
+    verify_dns: [".openai.com"]
+
+  - name: ChatGPT-User
+    vendor: OpenAI
+    ua_regex: "ChatGPT-User"
+    purpose: live-fetch
+    docs: https://platform.openai.com/docs/bots
+    verify_dns: [".openai.com"]
+
+  - name: ClaudeBot
+    vendor: Anthropic
+    ua_regex: "ClaudeBot"
+    purpose: training
+    docs: https://support.anthropic.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler
+    verify_dns: [".anthropic.com"]
+
+  - name: Claude-SearchBot
+    vendor: Anthropic
+    ua_regex: "Claude-SearchBot"
+    purpose: search-index
+    docs: https://support.anthropic.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler
+    verify_dns: [".anthropic.com"]
+
+  - name: Claude-User
+    vendor: Anthropic
+    ua_regex: "Claude-User"
+    purpose: live-fetch
+    docs: https://support.anthropic.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler
+    verify_dns: [".anthropic.com"]
+
+  - name: PerplexityBot
+    vendor: Perplexity
+    ua_regex: "PerplexityBot"
+    purpose: search-index
+    docs: https://docs.perplexity.ai/guides/bots
+    verify_dns: [".perplexity.ai", ".perplexity.com"]
+
+  - name: Perplexity-User
+    vendor: Perplexity
+    ua_regex: "Perplexity-User"
+    purpose: live-fetch
+    docs: https://docs.perplexity.ai/guides/bots
+    verify_dns: [".perplexity.ai", ".perplexity.com"]
+
+  - name: Google-Extended
+    vendor: Google
+    ua_regex: "Google-Extended"
+    purpose: training
+    docs: https://developers.google.com/search/docs/crawling-indexing/overview-google-crawlers
+    verify_dns: [".google.com", ".googlebot.com"]
+
+  - name: GoogleOther
+    vendor: Google
+    ua_regex: "GoogleOther"
+    purpose: training
+    docs: https://developers.google.com/search/docs/crawling-indexing/google-common-crawlers
+    verify_dns: [".google.com", ".googlebot.com"]
+
+  - name: Applebot-Extended
+    vendor: Apple
+    ua_regex: "Applebot-Extended"
+    purpose: training
+    docs: https://support.apple.com/en-us/119829
+    verify_dns: [".applebot.apple.com"]
+
+  - name: Applebot
+    vendor: Apple
+    ua_regex: "Applebot(?!-Extended)"
+    purpose: search-index
+    docs: https://support.apple.com/en-us/119829
+    verify_dns: [".applebot.apple.com"]
+
+  - name: Amazonbot
+    vendor: Amazon
+    ua_regex: "Amazonbot"
+    purpose: search-index
+    docs: https://developer.amazon.com/amazonbot
+    verify_dns: [".crawl.amazonbot.amazon"]
+
+  - name: meta-externalagent
+    vendor: Meta
+    ua_regex: "meta-externalagent"
+    purpose: training
+    docs: https://developers.facebook.com/docs/sharing/webmasters/web-crawlers/
+
+  - name: meta-externalfetcher
+    vendor: Meta
+    ua_regex: "meta-externalfetcher"
+    purpose: live-fetch
+    docs: https://developers.facebook.com/docs/sharing/webmasters/web-crawlers/
+
+  - name: Bytespider
+    vendor: ByteDance
+    ua_regex: "Bytespider"
+    purpose: training
+    docs: https://www.bytedance.com/
+
+  - name: CCBot
+    vendor: Common Crawl
+    ua_regex: "CCBot"
+    purpose: training
+    docs: https://commoncrawl.org/ccbot
+
+  - name: cohere-ai
+    vendor: Cohere
+    ua_regex: "cohere-(ai|training-data-crawler)"
+    purpose: training
+    docs: https://docs.cohere.com/
+
+  - name: Diffbot
+    vendor: Diffbot
+    ua_regex: "Diffbot"
+    purpose: training
+    docs: https://docs.diffbot.com/
+
+  - name: omgili
+    vendor: Webz.io
+    ua_regex: "omgili(bot)?"
+    purpose: training
+    docs: https://webz.io/blog/machine-learning/what-is-the-omgili-bot-and-why-is-it-crawling-your-website/
+
+  - name: Timpibot
+    vendor: Timpi
+    ua_regex: "Timpibot"
+    purpose: training
+    docs: https://timpi.io/
+
+  - name: YouBot
+    vendor: You.com
+    ua_regex: "YouBot"
+    purpose: search-index
+    docs: https://about.you.com/youbot/
+
+  - name: MistralAI-User
+    vendor: Mistral AI
+    ua_regex: "MistralAI-User"
+    purpose: live-fetch
+    docs: https://docs.mistral.ai/robots/
+
+  - name: DuckAssistBot
+    vendor: DuckDuckGo
+    ua_regex: "DuckAssistBot"
+    purpose: search-index
+    docs: https://duckduckgo.com/duckduckgo-help-pages/results/duckassistbot/
+
+  - name: PetalBot
+    vendor: Huawei
+    ua_regex: "PetalBot"
+    purpose: search-index
+    docs: https://webmaster.petalsearch.com/site/petalbot
+
+# Reference (non-AI) crawlers. Counted separately so you can compare AI crawl
+# share against classic search crawl. Set `ai: false` to keep an entry out of
+# the AI totals.
+reference_bots:
+  - name: Googlebot
+    vendor: Google
+    ua_regex: "Googlebot(?!-Image)"
+    purpose: search-index
+    docs: https://developers.google.com/search/docs/crawling-indexing/googlebot
+    ai: false
+    verify_dns: [".googlebot.com", ".google.com"]
+
+  - name: Bingbot
+    vendor: Microsoft
+    ua_regex: "bingbot"
+    purpose: search-index
+    docs: https://www.bing.com/webmasters/help/which-crawlers-does-bing-use-8c184ec0
+    ai: false
+    verify_dns: [".search.msn.com"]
+
+  - name: DuckDuckBot
+    vendor: DuckDuckGo
+    ua_regex: "DuckDuckBot"
+    purpose: search-index
+    docs: https://duckduckgo.com/duckduckgo-help-pages/results/duckduckbot/
+    ai: false
+
+  - name: YandexBot
+    vendor: Yandex
+    ua_regex: "YandexBot"
+    purpose: search-index
+    docs: https://yandex.com/support/webmaster/robot-workings/check-yandex-robots.html
+    ai: false
