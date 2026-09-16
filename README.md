@@ -69,6 +69,10 @@ _(That is the tool's real output against the synthetic fixture logs in `tests/fi
 ![Log formats: 4](https://img.shields.io/badge/log%20formats-nginx%20%7C%20apache%20%7C%20cloudflare%20%7C%20vercel-lightgrey)
 ![AI crawlers: 25](https://img.shields.io/badge/AI%20crawlers%20tracked-25-orange)
 
+## Status
+
+Last reviewed: September 2026 · release v2026.09
+
 ## Quick start
 
 ```bash
